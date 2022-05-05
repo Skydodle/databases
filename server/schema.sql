@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE messages (
   /* Describe your table here.*/
   id integer(11) auto_increment,
-  message varchar(200),
+  text varchar(200),
   username_id integer(11), /*foreign key*/
   PRIMARY KEY (id),
   FOREIGN KEY (username_id) REFERENCES users(id)
