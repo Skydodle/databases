@@ -6,13 +6,14 @@ module.exports = {
       if (err) {
         res.send(err);
       } else {
-        res.send(results);
+        res.json(results);
       }
     });
 
   }, // a function which handles a get request for all messages
   post: function (req, res) {
-    models.messages.create(req, (err, results) => {
+    let args = [req.body['username'], req.body['message'], req.body['roomname']];
+    models.messages.create(args, (err, results) => {
       if (err) {
         res.send(err);
       } else {

@@ -4,7 +4,7 @@
 const mysql = require('mysql2');
 const axios = require('axios');
 
-const API_URL = 'http://127.0.0.1:3000/classes';
+const API_URL = 'http://127.0.0.1:3002/classes';
 
 describe('Persistent Node Chat Server', () => {
   const dbConnection = mysql.createConnection({
@@ -16,7 +16,7 @@ describe('Persistent Node Chat Server', () => {
   beforeAll((done) => {
     dbConnection.connect();
 
-       const tablename = 'messages'; // TODO: fill this out
+    const tablename = 'messages'; // TODO: fill this out
 
     /* Empty the db table before all tests so that multiple tests
      * (or repeated runs of the tests)  will not fail when they should be passing
@@ -46,7 +46,7 @@ describe('Persistent Node Chat Server', () => {
         const queryString = 'SELECT * FROM messages';
         const queryArgs = [];
 
-        dbConnection.query(queryString, queryArgs, (err, results) => {
+        dbConnection.query(queryString, (err, results) => {
           if (err) {
             throw err;
           }
@@ -65,8 +65,10 @@ describe('Persistent Node Chat Server', () => {
 
   it('Should output all messages from the DB', (done) => {
     // Let's insert a message into the db
-       const queryString = 'Select text from messages';
-       const queryArgs = [];
+    const queryString = 'Select text from messages';
+    const queryArgs = [];
+    const message = 'In mercy\'s name, three days is all I need.';
+    const roomname = 'Hello';
     /* TODO: The exact query string and query args to use here
      * depend on the schema you design, so I'll leave them up to you. */
     dbConnection.query(queryString, queryArgs, (err) => {

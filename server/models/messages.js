@@ -1,9 +1,11 @@
 var db = require('../db');
 // sql query
 module.exports = {
+
   getAll: function (callback) {
+    // fetch all messages
     db.query(
-      'Select * from messages',
+      'Select messages.id, users.username, messages.text, messages.roomname from messages join users',
       function(err, results) {
         if (err) {
           callback(err);
@@ -15,11 +17,10 @@ module.exports = {
     );
   },
 
-  // a function which produces all the messages
-  create: function (message, callback) {
-    let args = [message.text];
+  create: function (args, callback) {
+    // create a message
     db.query(
-      'Insert into messages (text) values (?)', args,
+      'Insert into messages (username_id, text, roomname) values ((select id from users where username = ? limit 1), ?, ?)', args,
       function(err, results) {
         if (err) {
           callback(err);
@@ -29,8 +30,10 @@ module.exports = {
       }
     );
   }
-  // a function which can be used to insert a message into the database
+
+
+
 };
 
-
+// a function which can be used to insert a message into the database
 // 'Select users.username, messages.text from messages join users where users.id = messages.username_id'
